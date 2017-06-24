@@ -1,5 +1,7 @@
+# Created by https://www.gitignore.io/api/haskell
+
+### Haskell ###
 dist
-dist-*
 cabal-dev
 *.o
 *.hi
@@ -14,7 +16,6 @@ cabal.sandbox.config
 *.prof
 *.aux
 *.hp
-*.eventlog
 .stack-work/
-cabal.project.local
-.HTF/
+_cache/
+_site/
