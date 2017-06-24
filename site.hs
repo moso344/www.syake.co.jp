@@ -59,6 +59,11 @@ main = hakyll $ do
 
     match "templates/*" $ compile templateCompiler
 
+    -- scss/default.scssがあれば、同階層scssもまとめてbuildする
+    match "scss/default.scss" $ do
+        route $ setExtension "css"
+        compile $ unixFilter "npm" ["run", "-s", "build:scss"] "" >>= makeItem
+
 
 --------------------------------------------------------------------------------
 postCtx :: Context String

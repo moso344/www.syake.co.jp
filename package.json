@@ -1,6 +1,10 @@
 {
-    "name": "www.syake.co.jp",
-    "dependencies": {
-        "bootstrap": "^4.0.0-alpha.6"
-    }
+  "name": "www.syake.co.jp",
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
+    "node-sass": "^4.5.3"
+  },
+  "scripts": {
+    "build:scss": "node-sass ./scss/ --output ./_site/css/ --output-style compressed"
+  }
 }
