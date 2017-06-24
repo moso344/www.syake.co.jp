@@ -1,19 +1,15 @@
-name:                web
+name:                info-syake-co-jp
 version:             0.1.0.0
--- synopsis:
--- description:
-homepage:            https://github.com/githubuser/web#readme
-license:             BSD3
-license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2017 Author name here
+homepage:            https://github.com/Dan344/info.syake.co.jp#readme
+maintainer:          info@syake.co.jp
+author:              Syake
+copyright:           Syake
 category:            Web
 build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
 
-executable web
+executable site
   main-is:             site.hs
   default-language:    Haskell2010
   ghc-options:         -threaded
