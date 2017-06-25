@@ -22,6 +22,7 @@ main = hakyll $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/release.html" releaseCtx
+            >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" releaseCtx
             >>= relativizeUrls
 
@@ -58,12 +59,29 @@ main = hakyll $ do
         route $ setExtension "css"
         compile $ unixFilter "npm" ["run", "-s", "build:scss"] "" >>= makeItem
 
+    create ["feed.atom"] $ do
+        route idRoute
+        compile $ do
+            let feedCtx = releaseCtx `mappend`
+                          bodyField "description"
+            news <- fmap (take 10) . recentFirst =<< loadAllSnapshots "release/*.md" "content"
+            renderAtom releaseFeedConfiguration feedCtx news
+
 
 --------------------------------------------------------------------------------
 releaseCtx :: Context String
 releaseCtx =
     dateField "date" "%Y-%m-%d" `mappend`
     defaultContext
+
+releaseFeedConfiguration :: FeedConfiguration
+releaseFeedConfiguration = FeedConfiguration
+    { feedTitle       = "Syake株式会社ニュースリリース"
+    , feedDescription = "ニュースリリース"
+    , feedAuthorName  = "Syake"
+    , feedAuthorEmail = "info@syake.co.jp"
+    , feedRoot        = "https://www.syake.co.jp"
+    }
 
 pandocCompilerCustom :: Compiler (Item String)
 pandocCompilerCustom = pandocCompilerWith
