@@ -1,7 +1,9 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
+import qualified Data.Set    as S
 import           Hakyll
+import           Text.Pandoc
 
 
 --------------------------------------------------------------------------------
@@ -18,14 +20,14 @@ main = hakyll $ do
     -- ニュースリリース
     match "release/*.md" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/release.html"    releaseCtx
+        compile $ pandocCompilerCustom
+            >>= loadAndApplyTemplate "templates/release.html" releaseCtx
             >>= loadAndApplyTemplate "templates/default.html" releaseCtx
             >>= relativizeUrls
 
     match "*.md" $ do
         route   $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
@@ -54,6 +56,16 @@ main = hakyll $ do
 --------------------------------------------------------------------------------
 releaseCtx :: Context String
 releaseCtx =
-    dateField "date" "%B %e, %Y" `mappend`
+    dateField "date" "%Y-%m-%d" `mappend`
     defaultContext
 
+pandocCompilerCustom :: Compiler (Item String)
+pandocCompilerCustom = pandocCompilerWith
+    defaultHakyllReaderOptions { readerExtensions = S.insert Ext_ignore_line_breaks $
+                                   readerExtensions defaultHakyllReaderOptions }
+    defaultHakyllWriterOptions { writerHTMLMathMethod = MathJax ""
+                               , writerSectionDivs = True
+                               , writerExtensions = S.insert Ext_ignore_line_breaks $
+                                   writerExtensions defaultHakyllWriterOptions
+                               , writerHtml5 = True
+                               }

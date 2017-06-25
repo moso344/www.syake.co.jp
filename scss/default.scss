@@ -16,3 +16,16 @@ $link-color: $cyan;
 a:visited {
     color: $violet;
 }
+
+img {
+    @extend .img-fluid, .rounded ;
+}
+
+table {
+    @extend .table;
+    @extend .table-responsive;
+}
+
+blockquote {
+    @extend .blockquote;
+}
