@@ -41,12 +41,24 @@ main = hakyll $ do
     match "index.html" $ do
         route idRoute
         compile $ do
-            release <- recentFirst =<< loadAll "release/*"
+            release <- recentFirst =<< loadAll "release/*.md"
             let indexCtx =
                     listField "release" releaseCtx (return release) `mappend`
-                    constField "title" "Home"                `mappend`
+                    constField "title" "Syake株式会社" `mappend`
                     defaultContext
+            getResourceBody
+                >>= applyAsTemplate indexCtx
+                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                >>= relativizeUrls
 
+    match "release/index.html" $ do
+        route idRoute
+        compile $ do
+            release <- recentFirst =<< loadAll "release/*.md"
+            let indexCtx =
+                    listField "release" releaseCtx (return release) `mappend`
+                    constField "title" "ニュースリリース" `mappend`
+                    defaultContext
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
