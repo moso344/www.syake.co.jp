@@ -1,15 +1,26 @@
-$violet:     #6c71c4;
-$cyan:       #2aa198;
-$navy:       #000080;
-$light-cyan: #e0ffff;
-$yellow:     #b58900;
+$violet:      #9f81f7;
+$cyan:        #58d3f7;
+$blue:        #3c569f;
+$navy:        #000080;
+$light-yellow:#f0f2eb;
+$yellow:      #b58900;
+$dark-navy:   #0b0b61;
+$darker-navy: #0d1b40;
+$pink:        #ff5b77;
+$dark-orang:  #b45f04;
 
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, Meiryo, sans-serif;
-$body-bg: $navy;
-$body-color: $light-cyan;
+$body-bg: $dark-navy;
+$body-color: $light-yellow;
 
 $link-hover-color: $yellow;
 $link-color: $cyan;
+
+$card-cap-bg: $cyan;
+$card-bg: $darker-navy;
+$card-border-color: $blue;
+
+$text-muted: $dark-orang;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 
@@ -28,4 +39,8 @@ table {
 
 blockquote {
     @extend .blockquote;
+}
+
+.card p {
+    @extend .card-text;
 }

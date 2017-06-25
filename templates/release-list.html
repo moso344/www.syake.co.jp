@@ -1,8 +1,13 @@
-<ul>
+<ul class="list-unstyled">
     $for(release)$
-        <li>
-            $date$: <a href="$url$">$title$</a>
-            $teaser$
+        <li class="media">
+            <div class="media-body card mb-2">
+                <div class="card-block">
+                    <h5 class="card-title"><a href="$url$">$title$</a></h5>
+                    <h6 class="card-subtitle text-muted mb-2"><time class"text-right">$date$</time></h6>
+                    $teaser$
+                </div>
+            </div>
         </li>
     $endfor$
 </ul>
