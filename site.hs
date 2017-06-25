@@ -25,6 +25,12 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" releaseCtx
             >>= relativizeUrls
 
+    match "game/ghostus/*.md" $ do
+        route $ setExtension "html"
+        compile $ pandocCompilerCustom
+            >>= loadAndApplyTemplate "templates/ghostus.html" releaseCtx
+            >>= relativizeUrls
+
     match "*.md" $ do
         route   $ setExtension "html"
         compile $ pandocCompilerCustom

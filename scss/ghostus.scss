@@ -1,0 +1,30 @@
+$violet:  #6c71c4;
+$navy:    #000080;
+$magenta: rgba(180,0,90,1);
+$green:   rgba(48,225,95,1);
+$cyan:    rgba(18,160,255,1);
+$white:   #ffffff;
+$black:   #000000;
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, Meiryo, sans-serif;
+$body-bg: $black;
+$body-color: $white;
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+a:visited {
+    color: $violet;
+}
+
+img {
+    @extend .img-fluid, .rounded ;
+}
+
+table {
+    @extend .table;
+    @extend .table-responsive;
+}
+
+blockquote {
+    @extend .blockquote;
+}
