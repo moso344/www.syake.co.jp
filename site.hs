@@ -45,6 +45,7 @@ main = hakyll $ do
             let indexCtx =
                     listField "release" releaseCtx (return release) `mappend`
                     constField "title" "Syake株式会社" `mappend`
+                    constField "ogType" "website" `mappend`
                     defaultContext
             getResourceBody
                 >>= applyAsTemplate indexCtx
