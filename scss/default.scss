@@ -1,15 +1,18 @@
-$violet:      #9f81f7;
+$violet:      #b781f8;
 $cyan:        #58d3f7;
 $blue:        #3c569f;
 $navy:        #000080;
 $light-yellow:#f0f2eb;
 $yellow:      #b58900;
-$dark-navy:   #0b0b61;
+$dark-navy:   #0a0a57;
 $darker-navy: #0d1b40;
-$pink:        #ff5b77;
+$darkest-navy:#081129;
+$pink:        #cd4259;
+$green:       #146f23;
 $dark-orang:  #b45f04;
 
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, Meiryo, sans-serif;
+
 $body-bg: $dark-navy;
 $body-color: $light-yellow;
 
@@ -17,7 +20,7 @@ $link-hover-color: $yellow;
 $link-color: $cyan;
 
 $card-cap-bg: $cyan;
-$card-bg: $darker-navy;
+$card-bg: $darkest-navy;
 $card-border-color: $blue;
 
 $text-muted: $dark-orang;
@@ -43,4 +46,39 @@ blockquote {
 
 .card p {
     @extend .card-text;
+}
+
+h1 {
+    @extend .mb-3;
+    @extend .pl-3;
+    border-left: double 16px $pink;
+}
+
+h2 {
+    @extend .mb-3;
+    @extend .pt-1;
+    @extend .pb-1;
+    border-bottom: solid 1px $yellow;
+}
+
+h3 {
+    @extend .mb-2;
+    @extend .pl-2;
+    border-left: solid 10px $green;
+}
+
+header {
+    border-bottom: solid 1px $blue;
+    background-color: $darkest-navy;
+}
+
+main {
+    @extend .pt-3;
+    @extend .pb-3;
+    background-color: $darker-navy;
+}
+
+footer {
+    @extend .pt-4;
+    border-top: solid 1px $blue;
 }
