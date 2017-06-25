@@ -21,8 +21,8 @@ main = hakyll $ do
     match "release/*.md" $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
-            >>= loadAndApplyTemplate "templates/release.html" releaseCtx
             >>= saveSnapshot "content"
+            >>= loadAndApplyTemplate "templates/release.html" releaseCtx
             >>= loadAndApplyTemplate "templates/default.html" releaseCtx
             >>= relativizeUrls
 
@@ -72,6 +72,7 @@ main = hakyll $ do
 releaseCtx :: Context String
 releaseCtx =
     dateField "date" "%Y-%m-%d" `mappend`
+    teaserField "teaser" "content" `mappend`
     defaultContext
 
 releaseFeedConfiguration :: FeedConfiguration
