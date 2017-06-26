@@ -14,4 +14,5 @@ Google Driveを使用しています。右上のDownloadボタンからファイ
 - [GHOSTUS-β_Linux_64bit](https://drive.google.com/open?id=0B2L8LxhGSIgMV2tRVnMyVnpXbTg)
 
 ## インストラクション
-![](/image/game/ghostus-instruction.png)
+
+![ghostus-instruction](/image/game/ghostus-instruction.png)

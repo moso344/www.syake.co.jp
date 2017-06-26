@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Maybe
-import           Data.Monoid      (mappend)
+import           Data.Monoid
 import qualified Data.Set         as S
 import           Data.Time
 import           Data.Time.Format (defaultTimeLocale, formatTime, parseTimeM)
@@ -14,13 +14,11 @@ import           Text.Regex
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
-    match "image/**" $ do
-        route   idRoute
-        compile copyFileCompiler
+    match "templates/*" $ compile templateCompiler
 
-    match "css/*" $ do
-        route   idRoute
-        compile compressCssCompiler
+    match "image/**" $ do
+        route idRoute
+        compile copyFileCompiler
 
     -- ニュースリリース
     match "release/*.md" $ do
@@ -29,48 +27,44 @@ main = hakyll $ do
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/release.html" releaseCtx
             >>= loadAndApplyTemplate "templates/default.html" releaseCtx
-            >>= relativizeUrls
-
-    match "game/ghostus/*.md" $ do
-        route $ setExtension "html"
-        compile $ pandocCompilerCustom
-            >>= loadAndApplyTemplate "templates/ghostus.html" releaseCtx
-            >>= relativizeUrls
-
-    match "*.md" $ do
-        route   $ setExtension "html"
-        compile $ pandocCompilerCustom
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
-
-    match "index.html" $ do
-        route idRoute
-        compile $ do
-            release <- reverse <$> loadAll "release/*.md"
-            let indexCtx =
-                    listField "release" releaseCtx (return release) `mappend`
-                    constField "title" "Syake株式会社" `mappend`
-                    constField "ogType" "website" `mappend`
-                    defaultContext
-            getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                >>= relativizeUrls
+            >>= indentHtml
 
     match "release/index.html" $ do
         route idRoute
         compile $ do
             release <- reverse <$> loadAll "release/*.md"
-            let indexCtx =
-                    listField "release" releaseCtx (return release) `mappend`
-                    constField "title" "ニュースリリース" `mappend`
-                    defaultContext
+            let indexCtx = listField "release" releaseCtx (return release) `mappend`
+                           constField "title" "ニュースリリース" `mappend`
+                           defaultContext
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= relativizeUrls
 
-    match "templates/*" $ compile templateCompiler
+    match "game/ghostus/*.md" $ do
+        route $ setExtension "html"
+        compile $ pandocCompilerCustom
+            >>= loadAndApplyTemplate "templates/ghostus.html" releaseCtx
+            >>= indentHtml
+
+    match "*.md" $ do
+        route $ setExtension "html"
+        compile $ pandocCompilerCustom
+            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= indentHtml
+
+    match "index.html" $ do
+        route idRoute
+        compile $ do
+            release <- reverse <$> loadAll "release/*.md"
+            let indexCtx = listField "release" releaseCtx (return release) <>
+                           constField "title" "Syake株式会社" <>
+                           constField "ogType" "website" <>
+                           defaultContext
+            getResourceBody
+                >>= applyAsTemplate indexCtx
+                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                >>= indentHtml
 
     -- scss/default.scssがあれば、同階層scssもまとめてbuildする
     match "scss/default.scss" $ do
@@ -80,24 +74,16 @@ main = hakyll $ do
     create ["feed.atom"] $ do
         route idRoute
         compile $ do
-            let feedCtx = releaseCtx `mappend`
-                          bodyField "description"
             news <- take 10 . reverse <$> loadAllSnapshots "release/*.md" "content"
-            renderAtom releaseFeedConfiguration feedCtx news
-
+            renderAtom releaseFeedConfiguration (releaseCtx <> bodyField "description") news >>=
+                indentXml
 
 --------------------------------------------------------------------------------
+
 releaseCtx :: Context String
-releaseCtx = mconcat [ dateFiled' "date" "%Y-%m-%d"
-                     , dateFiled' "published" "%Y-%m-%d"
-                     , dateFiled' "updated" "%Y-%m-%d"
-                     , teaserField "teaser" "content"
-                     , teaserField' "description" "content"
-                     , defaultContext
-                     ]
-  where
-    teaserField' key snapShot  = mapContext (\s -> subRegex reg s "") $ teaserField key snapShot
-    reg = mkRegex "<(\"[^\"]*\"|\'[^\']*\'|[^\'\">])*>"
+releaseCtx = teaserField' "teaser" "content" <> defaultContext
+  where teaserField' key snapshot = field key $ \item -> take 100 . stripTags . trans . itemBody <$> loadSnapshot (itemIdentifier item) snapshot
+        trans h = either (error . show) id (writePlain def <$> readHtml def h)
 
 releaseFeedConfiguration :: FeedConfiguration
 releaseFeedConfiguration = FeedConfiguration
@@ -107,7 +93,6 @@ releaseFeedConfiguration = FeedConfiguration
     , feedAuthorEmail = "info@syake.co.jp"
     , feedRoot        = "https://www.syake.co.jp"
     }
-
 
 pandocCompilerCustom :: Compiler (Item String)
 pandocCompilerCustom = pandocCompilerWith
@@ -120,13 +105,18 @@ pandocCompilerCustom = pandocCompilerWith
                                , writerHtml5 = True
                                }
 
-dateFiled' :: String -> String -> Context String
-dateFiled' key format = field key $ \item -> do
-    let name = toFilePath $ itemIdentifier item
-        basename = takeBaseName name
-        dateString = take 10 basename
-        time :: UTCTime
-        time = fromMaybe
-            (error $ "file `" ++ dateString ++ "` doesn't match to format `%Y/%m%d*`")
-            (parseTimeM True defaultTimeLocale "%Y-%m-%d" dateString)
-    return $ formatTime defaultTimeLocale format time
+indentHtml :: Item String -> Compiler (Item String)
+indentHtml = withItemBody (\bo -> unixFilter "tidy"
+                              [ "--drop-empty-elements", "n"
+                              , "--tidy-mark", "n"
+                              , "--wrap", "0"
+                              , "-indent"
+                              ] bo)
+
+indentXml :: Item String -> Compiler (Item String)
+indentXml = withItemBody (\bo -> unixFilter "tidy" [ "--indent-cdata" , "y"
+                                                   , "--wrap", "0"
+                                                   , "-quiet"
+                                                   , "-xml"
+                                                   , "-indent"
+                                                   ] bo)
