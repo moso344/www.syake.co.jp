@@ -2,7 +2,6 @@
 title: GHOSTUS-β Download
 ---
 
-# ゲーム
 ご利用の環境に適したファイルをDownloadして下さい。
 
 Google Driveを使用しています。右上のDownloadボタンからファイル全体をDownloadして下さい。
