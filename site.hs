@@ -1,8 +1,12 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
-import qualified Data.Set    as S
+import           Data.Maybe
+import           Data.Monoid      (mappend)
+import qualified Data.Set         as S
+import           Data.Time
+import           Data.Time.Format (defaultTimeLocale, formatTime, parseTimeM)
 import           Hakyll
+import           System.FilePath  (takeBaseName)
 import           Text.Pandoc
 
 
@@ -41,7 +45,7 @@ main = hakyll $ do
     match "index.html" $ do
         route idRoute
         compile $ do
-            release <- recentFirst =<< loadAll "release/*.md"
+            release <- reverse <$> loadAll "release/*.md"
             let indexCtx =
                     listField "release" releaseCtx (return release) `mappend`
                     constField "title" "Syake株式会社" `mappend`
@@ -55,7 +59,7 @@ main = hakyll $ do
     match "release/index.html" $ do
         route idRoute
         compile $ do
-            release <- recentFirst =<< loadAll "release/*.md"
+            release <- reverse <$> loadAll "release/*.md"
             let indexCtx =
                     listField "release" releaseCtx (return release) `mappend`
                     constField "title" "ニュースリリース" `mappend`
@@ -77,16 +81,18 @@ main = hakyll $ do
         compile $ do
             let feedCtx = releaseCtx `mappend`
                           bodyField "description"
-            news <- fmap (take 10) . recentFirst =<< loadAllSnapshots "release/*.md" "content"
+            news <- take 10 . reverse <$> loadAllSnapshots "release/*.md" "content"
             renderAtom releaseFeedConfiguration feedCtx news
 
 
 --------------------------------------------------------------------------------
 releaseCtx :: Context String
-releaseCtx =
-    dateField "date" "%Y-%m-%d" `mappend`
-    teaserField "teaser" "content" `mappend`
-    defaultContext
+releaseCtx = mconcat [ dateFiled' "date" "%Y-%m-%d"
+                     , dateFiled' "published" "%Y-%m-%d"
+                     , dateFiled' "updated" "%Y-%m-%d"
+                     , teaserField "teaser" "content"
+                     , defaultContext
+                     ]
 
 releaseFeedConfiguration :: FeedConfiguration
 releaseFeedConfiguration = FeedConfiguration
@@ -107,3 +113,14 @@ pandocCompilerCustom = pandocCompilerWith
                                    writerExtensions defaultHakyllWriterOptions
                                , writerHtml5 = True
                                }
+
+dateFiled' :: String -> String -> Context String
+dateFiled' key format = field key $ \item -> do
+    let name = toFilePath $ itemIdentifier item
+        basename = takeBaseName name
+        dateString = take 10 basename
+        time :: UTCTime
+        time = fromMaybe
+            (error $ "file `" ++ dateString ++ "` doesn't match to format `%Y/%m%d*`")
+            (parseTimeM True defaultTimeLocale "%Y-%m-%d" dateString)
+    return $ formatTime defaultTimeLocale format time

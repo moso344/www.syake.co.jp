@@ -17,3 +17,5 @@ executable site
                        hakyll
                      , containers
                      , pandoc
+                     , time
+                     , filepath
