@@ -8,6 +8,7 @@ import           Data.Time.Format (defaultTimeLocale, formatTime, parseTimeM)
 import           Hakyll
 import           System.FilePath  (takeBaseName)
 import           Text.Pandoc
+import           Text.Regex
 
 
 --------------------------------------------------------------------------------
@@ -91,8 +92,12 @@ releaseCtx = mconcat [ dateFiled' "date" "%Y-%m-%d"
                      , dateFiled' "published" "%Y-%m-%d"
                      , dateFiled' "updated" "%Y-%m-%d"
                      , teaserField "teaser" "content"
+                     , teaserField' "description" "content"
                      , defaultContext
                      ]
+  where
+    teaserField' key snapShot  = mapContext (\s -> subRegex reg s "") $ teaserField key snapShot
+    reg = mkRegex "<(\"[^\"]*\"|\'[^\']*\'|[^\'\">])*>"
 
 releaseFeedConfiguration :: FeedConfiguration
 releaseFeedConfiguration = FeedConfiguration
@@ -102,6 +107,7 @@ releaseFeedConfiguration = FeedConfiguration
     , feedAuthorEmail = "info@syake.co.jp"
     , feedRoot        = "https://www.syake.co.jp"
     }
+
 
 pandocCompilerCustom :: Compiler (Item String)
 pandocCompilerCustom = pandocCompilerWith
