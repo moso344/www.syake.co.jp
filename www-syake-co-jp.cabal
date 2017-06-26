@@ -6,7 +6,6 @@ author:              Syake
 copyright:           Syake
 category:            Web
 build-type:          Simple
-extra-source-files:  README.md
 cabal-version:       >=1.10
 
 executable site
