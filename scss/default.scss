@@ -31,8 +31,8 @@ a:visited {
     color: $violet;
 }
 
-img {
-    @extend .img-fluid, .rounded ;
+.pandoc img {
+    @extend .img-fluid, .rounded, .mx-auto, .d-block ;
 }
 
 table {
