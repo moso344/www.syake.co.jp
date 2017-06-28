@@ -113,7 +113,7 @@ syakeDefaultImage :: String
 syakeDefaultImage = "/image/logo/syake-4-3.svg"
 
 ghostusDefaultImage :: String
-ghostusDefaultImage = "/image/game/ghostus-logo.png"
+ghostusDefaultImage = "/image/logo/ghostus-ogp.svg"
 
 releaseFeedConfiguration :: FeedConfiguration
 releaseFeedConfiguration = FeedConfiguration
