@@ -5,7 +5,7 @@
         <title>$title$</title>
 
         <meta name="keywords" content="Syake株式会社,Syake,任価,ninka,ゲーム,鮭,シャケ">
-        <meta name="description" content="Syake株式会社は「任価」(任意の時期・金額・回数による支払い)による投稿型PCゲーム販売サイト「SYAKERAKE」の運営及びゲーム開発を行っています">
+        <meta name="description" content="$description$">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="A0sloT4c4SGH1lCxMNnMeGqHsZ8VjCVRHF_cZwj60gw">
 
@@ -17,12 +17,7 @@
         <meta property="og:site_name" content="Syake株式会社">
         <meta property="og:url" content="https://www.syake.co.jp$url$">
         <meta property="og:image" content="https://www.syake.co.jp/image/logo/syake-gray.svg">
-
-        $if(description)$
         <meta property="og:description" content="$description$">
-        $else$
-        <meta property="og:description" content="Syake株式会社は「任価」(任意の時期・金額・回数による支払い)による投稿型PCゲーム販売サイト「SYAKERAKE」の運営及びゲーム開発を行っています">
-        $endif$
 
         $if(ogType)$
         <meta property="og:type" content="$ogType$">
@@ -40,9 +35,9 @@
         <header>
             <nav class="navbar navbar-inverse navbar-toggleable-md justify-content-center pb-1 pt-1">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/corporation-profile.html">Corporation</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/release/index.html">NewsRelease</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/release/">NewsRelease</a></li>
                     <li class="nav-item"><a class="nav-link" rel="alternate" type="application/atom+xml" href="/feed.atom">Feed</a></li>
                 </ul>
             </nav>
@@ -61,20 +56,23 @@
                 </div>
                 <div class="text-center">
                     <address>
-                        <p><a href="/index.html"><img src="/image/logo/syake-white.svg" alt="Syake株式会社" width="200" /><br></a>&copy; Syake株式会社</p>
+                        <a class="mb-1" href="/">
+                            <img class="mb-1" src="/image/logo/syake-white.svg" alt="Syake株式会社" width="200" />
+                        </a><br />
+                        © Syake株式会社
                     </address>
                 </div>
             </div>
         </footer>
 
         <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                                  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-          ga('create', 'UA-101654359-1', 'auto');
-          ga('send', 'pageview');
+         ga('create', 'UA-101654359-1', 'auto');
+         ga('send', 'pageview');
         </script>
     </body>
 </html>
