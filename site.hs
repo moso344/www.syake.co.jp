@@ -81,9 +81,14 @@ main = hakyll $ do
 --------------------------------------------------------------------------------
 
 releaseCtx :: Context String
-releaseCtx = teaserField' "teaser" "content" <> defaultContext
+releaseCtx = teaserField' "teaser" "content" <>
+             imageField "image" <>
+             defaultContext
   where teaserField' key snapshot = field key $ \item -> take 100 . stripTags . trans . itemBody <$> loadSnapshot (itemIdentifier item) snapshot
         trans h = either (error . show) id (writePlain def <$> readHtml def h)
+        imageField key = field key $ \item -> do
+            metadata <- getMetadata (itemIdentifier item)
+            return $ fromMaybe "https://www.syake.co.jp/image/logo/syake-gray.svg" $ ("https://www.syake.co.jp" ++) <$> lookupString key metadata
 
 releaseFeedConfiguration :: FeedConfiguration
 releaseFeedConfiguration = FeedConfiguration
