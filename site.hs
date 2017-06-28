@@ -35,7 +35,7 @@ main = hakyll $ do
             release <- reverse <$> loadAll "release/*.md"
             let indexCtx = listField "release" releaseCtx (return release) `mappend`
                            constField "title" "ニュースリリース" `mappend`
-                           defaultContext
+                           syakeDefaultCtx
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
@@ -44,13 +44,13 @@ main = hakyll $ do
     match "game/ghostus/*.md" $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
-            >>= loadAndApplyTemplate "templates/ghostus.html" releaseCtx
+            >>= loadAndApplyTemplate "templates/ghostus.html" ghostusDefaultCtx
             >>= indentHtml
 
     match "*.md" $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= loadAndApplyTemplate "templates/default.html" syakeDefaultCtx
             >>= indentHtml
 
     match "index.html" $ do
@@ -60,7 +60,7 @@ main = hakyll $ do
             let indexCtx = listField "release" releaseCtx (return release) <>
                            constField "title" "Syake株式会社" <>
                            constField "ogType" "website" <>
-                           defaultContext
+                           syakeDefaultCtx
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
@@ -81,14 +81,39 @@ main = hakyll $ do
 --------------------------------------------------------------------------------
 
 releaseCtx :: Context String
-releaseCtx = teaserField' "teaser" "content" <>
-             imageField "image" <>
-             defaultContext
-  where teaserField' key snapshot = field key $ \item -> take 100 . stripTags . trans . itemBody <$> loadSnapshot (itemIdentifier item) snapshot
-        trans h = either (error . show) id (writePlain def <$> readHtml def h)
-        imageField key = field key $ \item -> do
-            metadata <- getMetadata (itemIdentifier item)
-            return $ fromMaybe "/image/logo/syake-4-3.svg" $ lookupString key metadata
+releaseCtx = syakeDefaultCtx
+
+syakeDefaultCtx :: Context String
+syakeDefaultCtx = descriptionField "description" syakeDefualtDescription <>
+                  imageField "image" syakeDefaultImage <>
+                  defaultContext
+
+ghostusDefaultCtx :: Context String
+ghostusDefaultCtx = descriptionField "description" ghostusDefualtDescription <>
+                    imageField "image" ghostusDefaultImage <>
+                    defaultContext
+
+descriptionField :: String -> String -> Context String
+descriptionField key defualtDescription = field key $ \item -> do
+    metadata <- getMetadata (itemIdentifier item)
+    return $ fromMaybe defualtDescription $ lookupString key metadata
+
+syakeDefualtDescription :: String
+syakeDefualtDescription = "Syake株式会社は「任価」(任意の時期・金額・回数による支払い)による投稿型PCゲーム販売サイト「SYAKERAKE」の運営及びゲーム開発を行っています"
+
+ghostusDefualtDescription :: String
+ghostusDefualtDescription = "時間を繰り返し、積み重なる自身のリプレイ(GHOST)と共闘する、超時空多重リプレイSTGパズルゲーム"
+
+imageField :: String -> String -> Context String
+imageField key defaultImage = field key $ \item -> do
+    metadata <- getMetadata (itemIdentifier item)
+    return $ fromMaybe defaultImage $ lookupString key metadata
+
+syakeDefaultImage :: String
+syakeDefaultImage = "/image/logo/syake-4-3.svg"
+
+ghostusDefaultImage :: String
+ghostusDefaultImage = "/image/game/ghostus-logo.png"
 
 releaseFeedConfiguration :: FeedConfiguration
 releaseFeedConfiguration = FeedConfiguration
@@ -102,7 +127,9 @@ releaseFeedConfiguration = FeedConfiguration
 pandocCompilerCustom :: Compiler (Item String)
 pandocCompilerCustom = pandocCompilerWith
     defaultHakyllReaderOptions { readerExtensions = S.insert Ext_ignore_line_breaks $
-                                   readerExtensions defaultHakyllReaderOptions }
+                                                    S.delete Ext_implicit_figures $
+                                                    readerExtensions defaultHakyllReaderOptions
+                               }
     defaultHakyllWriterOptions { writerHTMLMathMethod = MathJax ""
                                , writerSectionDivs = True
                                , writerExtensions = S.insert Ext_ignore_line_breaks $

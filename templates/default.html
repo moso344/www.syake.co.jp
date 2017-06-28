@@ -5,7 +5,7 @@
         <title>$title$</title>
 
         <meta name="keywords" content="Syake株式会社,Syake,任価,ninka,ゲーム,鮭,シャケ">
-        <meta name="description" content="Syake株式会社は「任価」(任意の時期・金額・回数による支払い)による投稿型PCゲーム販売サイト「SYAKERAKE」の運営及びゲーム開発を行っています">
+        <meta name="description" content="$description$">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="A0sloT4c4SGH1lCxMNnMeGqHsZ8VjCVRHF_cZwj60gw">
 
@@ -16,18 +16,8 @@
         <meta property="og:title" content="$title$">
         <meta property="og:site_name" content="Syake株式会社">
         <meta property="og:url" content="https://www.syake.co.jp$url$">
-
-        $if(image)$
         <meta property="og:image" content=https://www.syake.co.jp$image$>
-        $else$
-        <meta property="og:image" content="https://www.syake.co.jp/image/logo/syake-4-3.svg">
-        $endif$
-
-        $if(description)$
         <meta property="og:description" content="$description$">
-        $else$
-        <meta property="og:description" content="Syake株式会社は「任価」(任意の時期・金額・回数による支払い)による投稿型PCゲーム販売サイト「SYAKERAKE」の運営及びゲーム開発を行っています">
-        $endif$
 
         $if(ogType)$
         <meta property="og:type" content="$ogType$">
@@ -66,14 +56,10 @@
                 </div>
                 <div class="text-center">
                     <address>
-                        <a href="/">
-                            <p>
-                                <img src="/image/logo/syake-white.svg" alt="Syake株式会社" width="200" />
-                            </p>
-                            <p>
-                                © Syake株式会社
-                            </p>
-                        </a>
+                        <a class="mb-1" href="/">
+                            <img class="mb-1" src="/image/logo/syake-white.svg" alt="Syake株式会社" width="200" />
+                        </a><br />
+                        © Syake株式会社
                     </address>
                 </div>
             </div>
