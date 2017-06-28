@@ -5,7 +5,16 @@
             <div class="card-block">
                 <h5 class="card-title"><a href="$url$">$title$</a></h5>
                 <h6 class="card-subtitle text-muted mb-2"><time class="text-right">$date$</time></h6>
-                $teaser$
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="$url$">
+                            <img class="rounded mw-100 ml-0 mr-0" src="$image$" alt="thumbnail" />
+                        </a>
+                    </div>
+                    <div class="col-md-9">
+                        <p class="card-text">$teaser$</p>
+                    </div>
+                </div>
             </div>
         </div>
     </li>

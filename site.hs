@@ -88,7 +88,7 @@ releaseCtx = teaserField' "teaser" "content" <>
         trans h = either (error . show) id (writePlain def <$> readHtml def h)
         imageField key = field key $ \item -> do
             metadata <- getMetadata (itemIdentifier item)
-            return $ fromMaybe "https://www.syake.co.jp/image/logo/syake-gray.svg" $ ("https://www.syake.co.jp" ++) <$> lookupString key metadata
+            return $ fromMaybe "/image/logo/syake-gray.svg" $ lookupString key metadata
 
 releaseFeedConfiguration :: FeedConfiguration
 releaseFeedConfiguration = FeedConfiguration
