@@ -97,7 +97,9 @@ releaseFeedConfiguration = FeedConfiguration
 pandocCompilerCustom :: Compiler (Item String)
 pandocCompilerCustom = pandocCompilerWith
     defaultHakyllReaderOptions { readerExtensions = S.insert Ext_ignore_line_breaks $
-                                   readerExtensions defaultHakyllReaderOptions }
+                                                    S.delete Ext_implicit_figures $
+                                                    readerExtensions defaultHakyllReaderOptions
+                               }
     defaultHakyllWriterOptions { writerHTMLMathMethod = MathJax ""
                                , writerSectionDivs = True
                                , writerExtensions = S.insert Ext_ignore_line_breaks $
