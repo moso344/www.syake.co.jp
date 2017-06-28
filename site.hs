@@ -20,7 +20,7 @@ main = hakyll $ do
         route idRoute
         compile copyFileCompiler
 
-    -- ニュースリリース
+    -- ニュースリリースの各記事にマッチ
     match "release/*.md" $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
@@ -29,6 +29,7 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" releaseCtx
             >>= indentHtml
 
+    -- ニュースリリース一覧にマッチ
     match "release/index.html" $ do
         route idRoute
         compile $ do
@@ -41,18 +42,21 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= relativizeUrls
 
+    -- GHOSTUS系記事にマッチ
     match "game/ghostus/*.md" $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/ghostus.html" ghostusDefaultCtx
             >>= indentHtml
 
+    -- 会社概要・errorページ等にマッチ
     match "*.md" $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/default.html" syakeDefaultCtx
             >>= indentHtml
 
+    -- HOMEにマッチ
     match "index.html" $ do
         route idRoute
         compile $ do
@@ -80,38 +84,49 @@ main = hakyll $ do
 
 --------------------------------------------------------------------------------
 
+-- | ニュースリリースのContext
 releaseCtx :: Context String
 releaseCtx = syakeDefaultCtx
 
+-- | Syake系ページのContext
 syakeDefaultCtx :: Context String
 syakeDefaultCtx = descriptionField "description" syakeDefualtDescription <>
                   imageField "image" syakeDefaultImage <>
                   defaultContext
 
+-- | GHOSTUS系ページのContext
 ghostusDefaultCtx :: Context String
 ghostusDefaultCtx = descriptionField "description" ghostusDefualtDescription <>
                     imageField "image" ghostusDefaultImage <>
                     defaultContext
 
+-- | description, og:descriptionに写される記事の概要
+-- key と descriptionが指定されていなかった場合のデフォルトの文字列を指定する
 descriptionField :: String -> String -> Context String
 descriptionField key defualtDescription = field key $ \item -> do
     metadata <- getMetadata (itemIdentifier item)
     return $ fromMaybe defualtDescription $ lookupString key metadata
 
+-- | Syake系記事のデフォルトのdescription, og:description
 syakeDefualtDescription :: String
 syakeDefualtDescription = "Syake株式会社は「任価」(任意の時期・金額・回数による支払い)による投稿型PCゲーム販売サイト「SYAKERAKE」の運営及びゲーム開発を行っています"
 
+-- | GHOSTUS系記事のデフォルトのdescription, og:description
 ghostusDefualtDescription :: String
 ghostusDefualtDescription = "時間を繰り返し、積み重なる自身のリプレイ(GHOST)と共闘する、超時空多重リプレイSTGパズルゲーム"
 
+-- | og:imageや記事一覧のサムネイルに使用する画像
+-- keyとデフォルトの画像のpathを指定する
 imageField :: String -> String -> Context String
 imageField key defaultImage = field key $ \item -> do
     metadata <- getMetadata (itemIdentifier item)
     return $ fromMaybe defaultImage $ lookupString key metadata
 
+-- | Syake系記事のデフォルトのog:image
 syakeDefaultImage :: String
 syakeDefaultImage = "/image/logo/syake-4-3.svg"
 
+-- | GHOSTUS系記事のデフォルトのog:image
 ghostusDefaultImage :: String
 ghostusDefaultImage = "/image/logo/ghostus-ogp.svg"
 
