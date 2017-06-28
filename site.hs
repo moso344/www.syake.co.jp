@@ -49,8 +49,8 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/ghostus.html" ghostusDefaultCtx
             >>= indentHtml
 
-    -- 会社概要・errorページ等にマッチ
-    match "*.md" $ do
+    -- 会社概要・errorページ等にマッチ。README.mdは除外
+    match ("*.md" .&&. complement "README.md") $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/default.html" syakeDefaultCtx
