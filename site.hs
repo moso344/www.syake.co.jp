@@ -129,11 +129,11 @@ imageField key defaultImage = field key $ \item -> do
 
 -- | Syake系記事のデフォルトのog:image
 syakeDefaultImage :: String
-syakeDefaultImage = "/image/logo/syake-4-3.svg"
+syakeDefaultImage = "/image/logo/syake-ogp.png"
 
 -- | GHOSTUS系記事のデフォルトのog:image
 ghostusDefaultImage :: String
-ghostusDefaultImage = "/image/logo/ghostus-ogp.svg"
+ghostusDefaultImage = "/image/logo/ghostus-ogp.png"
 
 releaseFeedConfiguration :: FeedConfiguration
 releaseFeedConfiguration = FeedConfiguration
