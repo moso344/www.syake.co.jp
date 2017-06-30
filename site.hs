@@ -75,6 +75,11 @@ main = hakyll $ do
         route $ setExtension "css"
         compile $ unixFilter "npm" ["run", "-s", "build:scss"] "" >>= makeItem
 
+    -- ニュースリリース一覧にマッチ
+    match "favicon/**" $ do
+        route idRoute
+        compile copyFileCompiler
+
     create ["feed.atom"] $ do
         route idRoute
         compile $ do
