@@ -72,7 +72,6 @@ main = hakyll $ do
 
     -- scss/default.scssがあれば、同階層scssもまとめてbuildする
     match "scss/default.scss" $ do
-        route $ setExtension "css"
         compile $ unixFilter "npm" ["run", "-s", "build:scss"] "" >>= makeItem
 
     -- ニュースリリース一覧にマッチ
