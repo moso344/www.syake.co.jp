@@ -82,3 +82,12 @@ footer {
     @extend .pt-1;
     border-top: solid 1px $blue;
 }
+
+// mbが指定されていない時はデフォルトでmb-3
+* {
+    &:not(.mb-0, .mb-1, .mb-2, .mb-4, .mb-5) {
+        &.card{
+            @extend .mb-3;
+        }
+    }
+}
