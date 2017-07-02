@@ -5,6 +5,6 @@
     "node-sass": "^4.5.3"
   },
   "scripts": {
-    "build:scss": "node-sass ./scss/ --output ./_site/css/ --output-style compressed"
+    "node-sass": "node-sass"
   }
 }

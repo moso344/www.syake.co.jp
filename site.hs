@@ -6,7 +6,7 @@ import qualified Data.Set         as S
 import           Data.Time
 import           Data.Time.Format (defaultTimeLocale, formatTime, parseTimeM)
 import           Hakyll
-import           System.FilePath  (takeBaseName)
+import           System.FilePath
 import           Text.Pandoc
 
 --------------------------------------------------------------------------------
@@ -73,9 +73,17 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/wrapper.html" indexCtx
                 >>= indentHtml
 
-    -- scss/default.scssがあれば、同階層scssもまとめてbuildする
-    match "scss/default.scss" $ do
-        compile $ unixFilter "npm" ["run", "-s", "build:scss"] "" >>= makeItem
+    -- scss群にマッチ
+    match "scss/*.scss" $ do
+        compile $ do
+            path <- getResourceFilePath
+            unixFilter "npm" [ "run"
+                             , "-s"
+                             , "node-sass"
+                             , path
+                             , flip replaceDirectory "./_site/css/" $ replaceExtension path ".css"
+                             , "--output-style", "compressed"
+                             ] "" >>= makeItem
 
     -- ニュースリリース一覧にマッチ
     match "favicon/**" $ do
