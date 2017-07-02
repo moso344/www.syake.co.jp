@@ -107,7 +107,6 @@ syakeDefaultCtx :: Context String
 syakeDefaultCtx = descriptionField "description" syakeDefualtDescription <>
                   imageField "image" syakeDefaultImage <>
                   constField "css" "/css/default.css" <>
-                  constField "keywords" "Syake株式会社,Syake,任価,ninka,ゲーム,鮭,シャケ" <>
                   defaultContext
 
 -- | GHOSTUS系ページのContext
@@ -115,7 +114,6 @@ ghostusDefaultCtx :: Context String
 ghostusDefaultCtx = descriptionField "description" ghostusDefualtDescription <>
                     imageField "image" ghostusDefaultImage <>
                     constField "css" "/css/ghostus.css" <>
-                    constField "keywords" "GHOSTUS,ゴースタス,ゲーム,STG,SHMUP,puzzle,PZL,シューティングパズル,Syake" <>
                     defaultContext
 
 -- | description, og:descriptionに写される記事の概要
