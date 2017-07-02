@@ -82,7 +82,6 @@ main = hakyll $ do
                              , "node-sass"
                              , path
                              , flip replaceDirectory "./_site/css/" $ replaceExtension path ".css"
-                             , "--output-style", "compressed"
                              ] "" >>= makeItem
 
     -- ニュースリリース一覧にマッチ
