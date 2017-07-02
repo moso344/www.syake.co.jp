@@ -27,6 +27,7 @@ main = hakyll $ do
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/release.html" releaseCtx
             >>= loadAndApplyTemplate "templates/default.html" releaseCtx
+            >>= loadAndApplyTemplate "templates/wrapper.html" releaseCtx
             >>= indentHtml
 
     -- ニュースリリース一覧にマッチ
@@ -40,6 +41,7 @@ main = hakyll $ do
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                >>= loadAndApplyTemplate "templates/wrapper.html" indexCtx
                 >>= relativizeUrls
 
     -- GHOSTUS系記事にマッチ
@@ -47,6 +49,7 @@ main = hakyll $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/ghostus.html" ghostusDefaultCtx
+            >>= loadAndApplyTemplate "templates/wrapper.html" ghostusDefaultCtx
             >>= indentHtml
 
     -- 会社概要・errorページ等にマッチ。README.mdは除外
@@ -54,6 +57,7 @@ main = hakyll $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/default.html" syakeDefaultCtx
+            >>= loadAndApplyTemplate "templates/wrapper.html" syakeDefaultCtx
             >>= indentHtml
 
     -- HOMEにマッチ
@@ -68,6 +72,7 @@ main = hakyll $ do
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                >>= loadAndApplyTemplate "templates/wrapper.html" indexCtx
                 >>= indentHtml
 
     -- scss/default.scssがあれば、同階層scssもまとめてbuildする
@@ -96,12 +101,16 @@ releaseCtx = syakeDefaultCtx
 syakeDefaultCtx :: Context String
 syakeDefaultCtx = descriptionField "description" syakeDefualtDescription <>
                   imageField "image" syakeDefaultImage <>
+                  constField "css" "/css/default.css" <>
+                  constField "keywords" "Syake株式会社,Syake,任価,ninka,ゲーム,鮭,シャケ" <>
                   defaultContext
 
 -- | GHOSTUS系ページのContext
 ghostusDefaultCtx :: Context String
 ghostusDefaultCtx = descriptionField "description" ghostusDefualtDescription <>
                     imageField "image" ghostusDefaultImage <>
+                    constField "css" "/css/ghostus.css" <>
+                    constField "keywords" "GHOSTUS,ゴースタス,ゲーム,STG,SHMUP,puzzle,PZL,シューティングパズル,Syake" <>
                     defaultContext
 
 -- | description, og:descriptionに写される記事の概要
