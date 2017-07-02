@@ -1,29 +1,35 @@
-$violet:      #b781f8;
-$cyan:        #58d3f7;
-$blue:        #3c569f;
-$navy:        #000080;
-$light-yellow:#f0f2eb;
-$yellow:      #b58900;
-$dark-navy:   #0a0a57;
-$darker-navy: #0d1b40;
-$darkest-navy:#081129;
-$pink:        #cd4259;
-$green:       #146f23;
-$dark-orang:  #b45f04;
+$violet:      #b781f8 !default;
+$cyan:        #58d3f7 !default;
+$blue:        #3c569f !default;
+$navy:        #000080 !default;
+$light-yellow:#f0f2eb !default;
+$yellow:      #b58900 !default;
+$dark-navy:   #0a0a57 !default;
+$darker-navy: #0d1b40 !default;
+$darkest-navy:#081129 !default;
+$pink:        #cd4259 !default;
+$green:       #146f23 !default;
+$dark-orang:  #b45f04 !default;
 
-$font-family-sans-serif: -apple-system, BlinkMacSystemFont, Meiryo, sans-serif;
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, Meiryo, sans-serif !default;
 
-$body-bg: $dark-navy;
-$body-color: $light-yellow;
+$header-color:        $darkest-navy !default;
+$header-border-color: $blue         !default;
+$main-color:          $darker-navy  !default;
+$footer-color:        $dark-navy    !default;
+$footer-border-color: $blue         !default;
 
-$link-hover-color: $yellow;
-$link-color: $cyan;
+$body-bg: $footer-color !default;
+$body-color: $light-yellow !default;
 
-$card-cap-bg: $cyan;
-$card-bg: $darkest-navy;
-$card-border-color: $blue;
+$link-hover-color: $yellow !default;
+$link-color: $cyan !default;
 
-$text-muted: $dark-orang;
+$card-cap-bg: $cyan !default;
+$card-bg: $darkest-navy !default;
+$card-border-color: $blue !default;
+
+$text-muted: $dark-orang !default;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 
@@ -67,20 +73,26 @@ h3 {
     border-left: solid 10px $green;
 }
 
+h4 {
+    @extend .mb-2;
+    @extend .pl-2;
+    border-left: solid 5px $cyan;
+}
+
 header {
-    border-bottom: solid 1px $blue;
-    background-color: $darkest-navy;
+    border-bottom: solid 1px $header-border-color;
+    background-color: $header-color;
 }
 
 main {
     @extend .pt-3;
     @extend .pb-3;
-    background-color: $darker-navy;
+    background-color: $main-color;
 }
 
 footer {
     @extend .pt-1;
-    border-top: solid 1px $blue;
+    border-top: solid 1px $footer-border-color;
 }
 
 // mbが指定されていない時はデフォルトでmb-3
