@@ -18,4 +18,3 @@ executable site
                      , pandoc
                      , time
                      , filepath
-                     , regex-compat

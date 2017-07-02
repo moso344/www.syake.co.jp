@@ -8,8 +8,6 @@ import           Data.Time.Format (defaultTimeLocale, formatTime, parseTimeM)
 import           Hakyll
 import           System.FilePath  (takeBaseName)
 import           Text.Pandoc
-import           Text.Regex
-
 
 --------------------------------------------------------------------------------
 main :: IO ()
