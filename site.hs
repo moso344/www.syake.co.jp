@@ -40,7 +40,7 @@ main = hakyll $ do
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= loadAndApplyTemplate "templates/wrapper.html" indexCtx
-                >>= relativizeUrls
+                >>= indentHtml
 
     -- GHOSTUS系記事にマッチ
     match "game/ghostus/*.md" $ do
