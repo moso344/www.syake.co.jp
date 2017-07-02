@@ -1,0 +1,3 @@
+<h1>$title$
+
+$partial("templates/release-list.hamlet")$

@@ -23,13 +23,13 @@ main = hakyll $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
             >>= saveSnapshot "content"
-            >>= loadAndApplyTemplate "templates/release.html" releaseCtx
-            >>= loadAndApplyTemplate "templates/default.html" releaseCtx
-            >>= loadAndApplyTemplate "templates/wrapper.html" releaseCtx
-            >>= indentHtml
+            >>= loadAndApplyTemplate "templates/release.hamlet" releaseCtx
+            >>= loadAndApplyTemplate "templates/default.hamlet" releaseCtx
+            >>= loadAndApplyTemplate "templates/wrapper.hamlet" releaseCtx
+            >>= relativizeUrls
 
     -- ニュースリリース一覧にマッチ
-    match "release/index.html" $ do
+    match "release/index.hamlet" $ do
         route idRoute
         compile $ do
             release <- reverse <$> loadAll "release/*.md"
@@ -38,29 +38,29 @@ main = hakyll $ do
                            syakeDefaultCtx
             getResourceBody
                 >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                >>= loadAndApplyTemplate "templates/wrapper.html" indexCtx
+                >>= loadAndApplyTemplate "templates/default.hamlet" indexCtx
+                >>= loadAndApplyTemplate "templates/wrapper.hamlet" indexCtx
                 >>= relativizeUrls
 
     -- GHOSTUS系記事にマッチ
     match "game/ghostus/*.md" $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
-            >>= loadAndApplyTemplate "templates/ghostus.html" ghostusDefaultCtx
-            >>= loadAndApplyTemplate "templates/wrapper.html" ghostusDefaultCtx
-            >>= indentHtml
+            >>= loadAndApplyTemplate "templates/ghostus.hamlet" ghostusDefaultCtx
+            >>= loadAndApplyTemplate "templates/wrapper.hamlet" ghostusDefaultCtx
+            >>= relativizeUrls
 
     -- 会社概要・errorページ等にマッチ。README.mdは除外
     match ("*.md" .&&. complement "README.md") $ do
         route $ setExtension "html"
         compile $ pandocCompilerCustom
-            >>= loadAndApplyTemplate "templates/default.html" syakeDefaultCtx
-            >>= loadAndApplyTemplate "templates/wrapper.html" syakeDefaultCtx
-            >>= indentHtml
+            -- >>= loadAndApplyTemplate "templates/default.hamlet" syakeDefaultCtx
+            >>= loadAndApplyTemplate "templates/wrapper.hamlet" syakeDefaultCtx
+            >>= relativizeUrls
 
     -- HOMEにマッチ
-    match "index.html" $ do
-        route idRoute
+    match "index.hamlet" $ do
+        route $ setExtension "html"
         compile $ do
             release <- reverse <$> loadAll "release/*.md"
             let indexCtx = listField "release" releaseCtx (return release) <>
@@ -69,9 +69,9 @@ main = hakyll $ do
                            syakeDefaultCtx
             getResourceBody
                 >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                >>= loadAndApplyTemplate "templates/wrapper.html" indexCtx
-                >>= indentHtml
+                >>= loadAndApplyTemplate "templates/default.hamlet" indexCtx
+                >>= loadAndApplyTemplate "templates/wrapper.hamlet" indexCtx
+                >>= relativizeUrls
 
     -- scss群にマッチ
     match "scss/*.scss" $ do
@@ -169,14 +169,6 @@ pandocCompilerCustom = pandocCompilerWith
                                    writerExtensions defaultHakyllWriterOptions
                                , writerHtml5 = True
                                }
-
-indentHtml :: Item String -> Compiler (Item String)
-indentHtml = withItemBody (\bo -> unixFilter "tidy"
-                              [ "--drop-empty-elements", "n"
-                              , "--tidy-mark", "n"
-                              , "--wrap", "0"
-                              , "-indent"
-                              ] bo)
 
 indentXml :: Item String -> Compiler (Item String)
 indentXml = withItemBody (\bo -> unixFilter "tidy" [ "--indent-cdata" , "y"

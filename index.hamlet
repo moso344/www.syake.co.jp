@@ -1,0 +1,46 @@
+<h1>$title$
+
+<div .row>
+    <div .col-md-3>
+        <div .card>
+            <img .mw-100 .mt-4 .mb-3 .mr-4 .ml-4 src=/image/logo/syake-white.svg alt=Syake株式会社>
+
+    <div .col-md-9>
+        <p>Syake株式会社では「デジタルコンテンツの真時代へ」を合言葉に、「任価(任意の金額・時期・回数での支払い)」による投稿型PCゲーム販売サイト「<a href=http://www.syakerake.jp>SYAKERAKE</a>」の開発・運営及び、ゲーム開発を行っています。
+
+<h2>Products
+<div .card-deck>
+    <div .card>
+        <a href=/game/ghostus/><img .card-img-top src=/image/logo/ghostus-4-3.svg alt=GHOSTUS>
+        <div .card-block>
+            <h5 .card-title><a href=/game/ghostus/>GHOSTUS
+            <p .card-text>時間を繰り返し、積み重なる自身のリプレイ(GHOST)と共闘する、超時空多重リプレイSTGパズルゲーム
+
+    <div .card>
+        <a href=http://www.syakerake.jp><img .card-img-top src=/image/logo/syakerake-4-3.svg alt=SYAKERAKE>
+        <div .card-block>
+            <h5 .card-title><a href=http://www.syakerake.jp>SYAKERAKE
+            <p .card-text>任価(任意の時期・金額・回数の支払い)によるユーザ投稿型PCゲーム販売サイト
+
+<h2>Release
+$partial("templates/release-list.hamlet")$
+
+<h2>Social
+<div .row>
+    <div .col-md-6 mb-3>
+        <h3><i .fa .fa-twitter aria-hidden=true></i> Syake株式会社
+        <a .twitter-timeline
+            data-chrome="nofooter transparent noheader noscrollbar"
+            data-height=800
+            data-theme=dark
+            href=https://twitter.com/SyakeCorp>Tweets by @SyakeCorp
+
+    <div .col-md-6 mb-3>
+        <h3><i .fa .fa-twitter aria-hidden=true></i> SYAKERAKE
+        <a .twitter-timeline
+            data-chrome="nofooter transparent noheader noscrollbar"
+            data-height=800
+            data-theme=dark
+            href=https://twitter.com/SYAKERAKE>Tweets by @SYAKERAKE
+
+<script async=async src=https://platform.twitter.com/widgets.js charset=utf-8>

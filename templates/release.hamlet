@@ -1,0 +1,11 @@
+<div class="info">
+    <p class="text-right mb-0">$date$
+    <p class="text-left mb-0">ニュースリリース
+    <p class="text-right"> Syake株式会社 
+    <h1>$title$
+
+
+<div class="pandoc">
+$body$
+
+
