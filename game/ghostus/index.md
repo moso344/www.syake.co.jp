@@ -9,6 +9,8 @@ title: GHOSTUS
 レコードボタンを押すことで「その時」から「死ぬ時」までの行動の記録を開始し、死によって過去「その時」に遡ります。
 レコード→死→復活→レコード→死→復活→…を繰り返す事で最大7人のGHOSTと共闘する事が出来ます。
 
+<div class="row">
+<div class="col-md-6">
 |||
 |:--           |:--|
 |タイトル      |GHOSTUS (ゴースタス)|
@@ -21,7 +23,11 @@ title: GHOSTUS
 |販売価格      |任価(任意の時期・金額・回数)による|
 |ゲーム性      |シンプルでいてマリアナ海溝のように深い|
 | β版         | <b>[β版をダウンロードする](./download.html")</b>
-|Movie         | <iframe width="800" height="600" src="https://www.youtube.com/embed/QiwK5Z60VYk" frameborder="0" allowfullscreen></iframe> |
+</div>
+<div class="col-md-6">
+<iframe class="w-100" width="560" height="315" src="https://www.youtube.com/embed/QiwK5Z60VYk" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
 
 
 ## 構成
