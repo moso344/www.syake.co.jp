@@ -10,6 +10,7 @@ $darkest-navy:#081129 !default;
 $pink:        #cd4259 !default;
 $green:       #146f23 !default;
 $dark-orang:  #b45f04 !default;
+$white:       #ffffff !default;
 
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, Meiryo, sans-serif !default;
 
@@ -31,14 +32,21 @@ $card-border-color: $blue !default;
 
 $text-muted: $dark-orang !default;
 
+$thumbnail-padding: 0.4rem;
+$thumbnail-bg: rgba($white, 0.98);
+$thumbnail-border-color: $blue;
+
 @import '../node_modules/bootstrap/scss/bootstrap';
 
 a:visited {
     color: $violet;
 }
 
-.pandoc img {
-    @extend .img-fluid, .rounded, .mx-auto, .d-block ;
+.pandoc{
+    img {
+        //@extend .img-fluid, .rounded, .mx-auto, .d-block ;
+        @extend .rounded;
+    }
 }
 
 table {
