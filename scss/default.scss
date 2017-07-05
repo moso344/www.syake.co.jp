@@ -60,17 +60,6 @@ blockquote {
     @extend .blockquote;
 }
 
-p {
-    @extend p;
-    &:not(.text-left, .text-center, .text-right) {
-        text-align: justify;
-    }
-
-    .card & {
-        @extend .card-text;
-    }
-}
-
 h1 {
     @extend .mb-3;
     @extend .pl-3;
@@ -119,4 +108,15 @@ footer {
             @extend .mb-3;
         }
     }
+
+    // p及び親要素にtext-alignの指定が無ければjustify
+    &:not(.text-left, .text-center, .text-right) {
+        & > p:not(.text-left, .text-center, .text-right) {
+            text-align: justify;
+        }
+    }
+}
+
+.card p {
+    @extend .card-text;
 }
