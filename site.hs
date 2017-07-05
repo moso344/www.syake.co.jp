@@ -100,7 +100,8 @@ main = hakyll $ do
 
 -- | ニュースリリースのContext
 releaseCtx :: Context String
-releaseCtx = syakeDefaultCtx
+releaseCtx = teaserField "teaser" "content" <>
+             syakeDefaultCtx
 
 -- | Syake系ページのContext
 syakeDefaultCtx :: Context String
