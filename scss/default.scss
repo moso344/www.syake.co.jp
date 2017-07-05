@@ -36,6 +36,8 @@ $thumbnail-padding: 0.4rem;
 $thumbnail-bg: rgba($white, 0.98);
 $thumbnail-border-color: $blue;
 
+$line-height-base: 1.55 !default;
+
 @import '../node_modules/bootstrap/scss/bootstrap';
 
 a:visited {
