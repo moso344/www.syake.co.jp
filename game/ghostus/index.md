@@ -22,7 +22,7 @@ title: GHOSTUS
 |完成版発売予定|2017年冬頃|
 |販売価格      |任価(任意の時期・金額・回数)による|
 |ゲーム性      |シンプルでいてマリアナ海溝のように深い|
-| β版         | <b>[β版をダウンロードする](./download.html")</b>
+| β版         | <b>[β版をダウンロードする](https://www.syakerake.jp/1)</b>
 </div>
 <div class="col-md-6">
 <iframe class="w-100" width="560" height="315" src="https://www.youtube.com/embed/QiwK5Z60VYk" frameborder="0" allowfullscreen></iframe>
