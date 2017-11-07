@@ -1,9 +1,10 @@
 # www.syake.co.jp
+
 Syake株式会社公式HP -> <https://www.syake.co.jp>
 
 ## 入れとく
 
-- npm
+- yarn
 - [tidy-html5](https://github.com/htacg/tidy-html5)
 
 ## 動かす

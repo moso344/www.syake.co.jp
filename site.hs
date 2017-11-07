@@ -77,12 +77,13 @@ main = hakyll $ do
     match "scss/*.scss" $ do
         compile $ do
             path <- getResourceFilePath
-            unixFilter "npm" [ "run"
-                             , "-s"
-                             , "node-sass"
-                             , path
-                             , flip replaceDirectory "./_site/css/" $ replaceExtension path ".css"
-                             ] "" >>= makeItem
+            unixFilter "yarn"
+                [ "run"
+                , "-s"
+                , "node-sass"
+                , path
+                , flip replaceDirectory "./_site/css/" $ replaceExtension path ".css"
+                ] "" >>= makeItem
 
     -- ニュースリリース一覧にマッチ
     match "favicon/**" $ do
