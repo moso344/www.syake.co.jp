@@ -1,18 +1,20 @@
 name: www-syake-co-jp
-version: '0.1.0.0'
+version: 1.0.0
 category: Web
 author: Syake
 maintainer: info@syake.co.jp
 copyright: Syake
-license: UnspecifiedLicense
-homepage: https://github.com/Dan344/info.syake.co.jp#readme
+
+github: Dan344/www.syake.co.jp
+
 dependencies:
 - base >=4.7 && <5
-- hakyll
 - containers
+- filepath
+- hakyll
 - pandoc
 - time
-- filepath
+
 executables:
   site:
     main: site.hs
