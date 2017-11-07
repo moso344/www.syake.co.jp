@@ -1,5 +1,6 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
+import           Data.List       (isSuffixOf)
 import           Data.Maybe
 import           Data.Monoid
 import qualified Data.Set        as S
@@ -12,23 +13,24 @@ main :: IO ()
 main = hakyll $ do
     match "templates/*" $ compile templateCompiler
 
-    match "image/**" $ do
+    match ("image/**" .||. "favicon/**") $ do
         route idRoute
         compile copyFileCompiler
 
     -- ニュースリリースの各記事にマッチ
     match "release/*.md" $ do
-        route $ setExtension "html"
+        route cleanRoute
         compile $ pandocCompilerCustom
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/release.html" releaseCtx
             >>= loadAndApplyTemplate "templates/default.html" releaseCtx
             >>= loadAndApplyTemplate "templates/wrapper.html" releaseCtx
+            >>= cleanUrls
             >>= indentHtml
 
     -- ニュースリリース一覧にマッチ
-    match "release/index.html" $ do
-        route idRoute
+    match "release.md" $ do
+        route cleanRoute
         compile $ do
             release <- reverse <$> loadAll "release/*.md"
             let indexCtx = listField "release" releaseCtx (return release) `mappend`
@@ -38,22 +40,25 @@ main = hakyll $ do
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= loadAndApplyTemplate "templates/wrapper.html" indexCtx
+                >>= cleanUrls
                 >>= indentHtml
 
     -- GHOSTUS系記事にマッチ
     match "game/ghostus/*.md" $ do
-        route $ setExtension "html"
+        route cleanRoute
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/ghostus.html" ghostusDefaultCtx
             >>= loadAndApplyTemplate "templates/wrapper.html" ghostusDefaultCtx
+            >>= cleanUrls
             >>= indentHtml
 
     -- 会社概要・errorページ等にマッチ。README.mdは除外
     match ("*.md" .&&. complement "README.md") $ do
-        route $ setExtension "html"
+        route cleanRoute
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/default.html" syakeDefaultCtx
             >>= loadAndApplyTemplate "templates/wrapper.html" syakeDefaultCtx
+            >>= cleanUrls
             >>= indentHtml
 
     -- HOMEにマッチ
@@ -69,6 +74,7 @@ main = hakyll $ do
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= loadAndApplyTemplate "templates/wrapper.html" indexCtx
+                >>= cleanUrls
                 >>= indentHtml
 
     -- scss群にマッチ
@@ -81,11 +87,6 @@ main = hakyll $ do
             , path
             , flip replaceDirectory "./_site/css/" $ replaceExtension path ".css"
             ] "" >>= makeItem
-
-    -- ニュースリリース一覧にマッチ
-    match "favicon/**" $ do
-        route idRoute
-        compile copyFileCompiler
 
     create ["feed.atom"] $ do
         route idRoute
@@ -166,6 +167,16 @@ pandocCompilerCustom = pandocCompilerWith
                                    writerExtensions defaultHakyllWriterOptions
                                , writerHtml5 = True
                                }
+
+cleanRoute :: Routes
+cleanRoute = customRoute createIndexRoute
+  where createIndexRoute ident = dropExtension (toFilePath ident) </> "index.html"
+
+cleanUrls :: Item String -> Compiler (Item String)
+cleanUrls = return . fmap (withUrls cleanUrlString)
+    where cleanUrlString path
+              | "/index.html" `isSuffixOf` path = dropFileName path
+              | otherwise = path
 
 indentHtml :: Item String -> Compiler (Item String)
 indentHtml = withItemBody (unixFilter "tidy"
