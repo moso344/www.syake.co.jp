@@ -44,7 +44,7 @@ main = hakyll $ do
                 >>= indentHtml
 
     -- GHOSTUS系記事にマッチ
-    match "game/ghostus/*.md" $ do
+    match ("game/ghostus.md" .||. "game/ghostus/*.md") $ do
         route cleanRoute
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/ghostus.html" ghostusDefaultCtx
@@ -52,10 +52,18 @@ main = hakyll $ do
             >>= cleanUrls
             >>= indentHtml
 
-    -- 会社概要・errorページ等にマッチ。README.mdは除外
+    -- 会社概要などにマッチ、README.mdは除外
     match ("*.md" .&&. complement "README.md") $ do
         route cleanRoute
         compile $ pandocCompilerCustom
+            >>= loadAndApplyTemplate "templates/default.html" syakeDefaultCtx
+            >>= loadAndApplyTemplate "templates/wrapper.html" syakeDefaultCtx
+            >>= cleanUrls
+            >>= indentHtml
+
+    match "error.html" $ do
+        route idRoute
+        compile $ getResourceBody
             >>= loadAndApplyTemplate "templates/default.html" syakeDefaultCtx
             >>= loadAndApplyTemplate "templates/wrapper.html" syakeDefaultCtx
             >>= cleanUrls
