@@ -2,9 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Maybe
 import           Data.Monoid
-import qualified Data.Set         as S
-import           Data.Time
-import           Data.Time.Format (defaultTimeLocale, formatTime, parseTimeM)
+import qualified Data.Set        as S
 import           Hakyll
 import           System.FilePath
 import           Text.Pandoc
@@ -74,16 +72,15 @@ main = hakyll $ do
                 >>= indentHtml
 
     -- scss群にマッチ
-    match "scss/*.scss" $ do
-        compile $ do
-            path <- getResourceFilePath
-            unixFilter "yarn"
-                [ "run"
-                , "-s"
-                , "node-sass"
-                , path
-                , flip replaceDirectory "./_site/css/" $ replaceExtension path ".css"
-                ] "" >>= makeItem
+    match "scss/*.scss" $ compile $ do
+        path <- getResourceFilePath
+        unixFilter "yarn"
+            [ "run"
+            , "-s"
+            , "node-sass"
+            , path
+            , flip replaceDirectory "./_site/css/" $ replaceExtension path ".css"
+            ] "" >>= makeItem
 
     -- ニュースリリース一覧にマッチ
     match "favicon/**" $ do
@@ -171,17 +168,18 @@ pandocCompilerCustom = pandocCompilerWith
                                }
 
 indentHtml :: Item String -> Compiler (Item String)
-indentHtml = withItemBody (\bo -> unixFilter "tidy"
-                              [ "--drop-empty-elements", "n"
-                              , "--tidy-mark", "n"
-                              , "--wrap", "0"
-                              , "-indent"
-                              ] bo)
+indentHtml = withItemBody (unixFilter "tidy"
+    [ "--drop-empty-elements", "n"
+    , "--tidy-mark", "n"
+    , "--wrap", "0"
+    , "-indent"
+    ])
 
 indentXml :: Item String -> Compiler (Item String)
-indentXml = withItemBody (\bo -> unixFilter "tidy" [ "--indent-cdata" , "y"
-                                                   , "--wrap", "0"
-                                                   , "-quiet"
-                                                   , "-xml"
-                                                   , "-indent"
-                                                   ] bo)
+indentXml = withItemBody (unixFilter "tidy"
+    [ "--indent-cdata" , "y"
+    , "--wrap", "0"
+    , "-quiet"
+    , "-xml"
+    , "-indent"
+    ])
