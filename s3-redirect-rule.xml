@@ -1,0 +1,56 @@
+<RoutingRules>
+    <RoutingRule>
+        <Condition>
+            <KeyPrefixEquals>release/1.html</KeyPrefixEquals>
+        </Condition>
+        <Redirect>
+            <HostName>www.syake.co.jp</HostName>
+            <ReplaceKeyWith>release/1</ReplaceKeyWith>
+            <HttpRedirectCode>301</HttpRedirectCode>
+        </Redirect>
+    </RoutingRule>
+
+    <RoutingRule>
+        <Condition>
+            <KeyPrefixEquals>release/2.html</KeyPrefixEquals>
+        </Condition>
+        <Redirect>
+            <HostName>www.syake.co.jp</HostName>
+            <ReplaceKeyWith>release/2</ReplaceKeyWith>
+            <HttpRedirectCode>301</HttpRedirectCode>
+        </Redirect>
+    </RoutingRule>
+
+    <RoutingRule>
+        <Condition>
+            <KeyPrefixEquals>release/3.html</KeyPrefixEquals>
+        </Condition>
+        <Redirect>
+            <HostName>www.syake.co.jp</HostName>
+            <ReplaceKeyWith>release/3</ReplaceKeyWith>
+            <HttpRedirectCode>301</HttpRedirectCode>
+        </Redirect>
+    </RoutingRule>
+
+    <RoutingRule>
+        <Condition>
+            <KeyPrefixEquals>/corporation-profile.html</KeyPrefixEquals>
+        </Condition>
+        <Redirect>
+            <HostName>www.syake.co.jp</HostName>
+            <ReplaceKeyWith>/corporation-profile</ReplaceKeyWith>
+            <HttpRedirectCode>301</HttpRedirectCode>
+        </Redirect>
+    </RoutingRule>
+
+    <RoutingRule>
+        <Condition>
+            <KeyPrefixEquals>/game/ghostus/download.html</KeyPrefixEquals>
+        </Condition>
+        <Redirect>
+            <HostName>www.syake.co.jp</HostName>
+            <ReplaceKeyWith>/game/ghostus/download</ReplaceKeyWith>
+            <HttpRedirectCode>301</HttpRedirectCode>
+        </Redirect>
+    </RoutingRule>
+</RoutingRules>

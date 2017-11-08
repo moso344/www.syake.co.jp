@@ -1,27 +1,27 @@
 <ul class="list-unstyled mb-0">
-    $for(release)$
-    <li class="media">
-        <div class="media-body card">
-            <div class="card-block">
-                <h5 class="card-title"><a href="$url$">$title$</a></h5>
-                <h6 class="card-subtitle text-muted mb-2"><time class="text-right">$date$</time></h6>
-                <div class="row">
-                    <div class="col-md-3">
-                        <a href="$url$">
-                            <span class="hidden-md-up"><img class="rounded mw-100 mx-0 mb-2" src="$image$" alt="thumbnail" /></span>
-                            <span class="hidden-sm-down"><img class="rounded mw-100 mx-0" src="$image$" alt="thumbnail" /></span>
-                        </a>
-                    </div>
-                    <div class="col-md-9">
-                    $if(teaser)$
-                        $teaser$
-                    $else$
-                        $description$
-                    $endif$
-                    </div>
-                </div>
-            </div>
+  $for(release)$
+  <li class="media">
+    <div class="media-body card">
+      <div class="card-block">
+        <h5 class="card-title"><a href="$url$">$title$</a></h5>
+        <h6 class="card-subtitle text-muted mb-2"><time class="text-right">$date$</time></h6>
+        <div class="row">
+          <div class="col-md-3">
+            <a href="$url$">
+              <span class="hidden-md-up"><img class="rounded mw-100 mx-0 mb-2" src="$image$" alt="thumbnail" /></span>
+              <span class="hidden-sm-down"><img class="rounded mw-100 mx-0" src="$image$" alt="thumbnail" /></span>
+            </a>
+          </div>
+          <div class="col-md-9">
+            $if(teaser)$
+            $teaser$
+            $else$
+            $description$
+            $endif$
+          </div>
         </div>
-    </li>
-    $endfor$
+      </div>
+    </div>
+  </li>
+  $endfor$
 </ul>
