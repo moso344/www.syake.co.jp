@@ -5,7 +5,7 @@
         </Condition>
         <Redirect>
             <HostName>www.syake.co.jp</HostName>
-            <ReplaceKeyWith>release/1</ReplaceKeyWith>
+            <ReplaceKeyWith>release/1/</ReplaceKeyWith>
             <HttpRedirectCode>301</HttpRedirectCode>
         </Redirect>
     </RoutingRule>
@@ -16,7 +16,7 @@
         </Condition>
         <Redirect>
             <HostName>www.syake.co.jp</HostName>
-            <ReplaceKeyWith>release/2</ReplaceKeyWith>
+            <ReplaceKeyWith>release/2/</ReplaceKeyWith>
             <HttpRedirectCode>301</HttpRedirectCode>
         </Redirect>
     </RoutingRule>
@@ -27,7 +27,7 @@
         </Condition>
         <Redirect>
             <HostName>www.syake.co.jp</HostName>
-            <ReplaceKeyWith>release/3</ReplaceKeyWith>
+            <ReplaceKeyWith>release/3/</ReplaceKeyWith>
             <HttpRedirectCode>301</HttpRedirectCode>
         </Redirect>
     </RoutingRule>
@@ -38,7 +38,7 @@
         </Condition>
         <Redirect>
             <HostName>www.syake.co.jp</HostName>
-            <ReplaceKeyWith>corporation-profile</ReplaceKeyWith>
+            <ReplaceKeyWith>corporation-profile/</ReplaceKeyWith>
             <HttpRedirectCode>301</HttpRedirectCode>
         </Redirect>
     </RoutingRule>
@@ -49,7 +49,7 @@
         </Condition>
         <Redirect>
             <HostName>www.syake.co.jp</HostName>
-            <ReplaceKeyWith>game/ghostus/download</ReplaceKeyWith>
+            <ReplaceKeyWith>game/ghostus/download/</ReplaceKeyWith>
             <HttpRedirectCode>301</HttpRedirectCode>
         </Redirect>
     </RoutingRule>
