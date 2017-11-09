@@ -35,12 +35,12 @@ $list-group-border-color: $blue !default;
 $list-group-hover-bg: #081332 !default;
 
 $list-group-action-color:        rgba(255, 255, 255, 0.75) !default;
-$list-group-action-hover-color:  rgba(255, 255, 255, 0.6) !default;
+$list-group-action-hover-color:  rgba(255, 255, 255, 0.8) !default;
 
 $list-group-active-bg:           $navy !default;
 $list-group-active-border-color: $list-group-active-bg !default;
 
-$list-group-action-active-color: rgba(255, 255, 255, 0.5) !default;
+$list-group-action-active-color: rgba(255, 255, 255, 0.7) !default;
 $list-group-action-active-bg:    $darkest-navy !default;
 
 $text-muted: $dark-orang !default;
@@ -134,9 +134,13 @@ footer {
     @extend .card-text;
 }
 
-.small-release-title {
+a > .small-release-title {
     @extend .small;
     display: inline-block;
     line-height: 1.2rem;
     color: rgba(255, 255, 255, 0.5);
+}
+
+a:hover > .small-release-title {
+    color: rgba(255, 255, 255, 0.6);
 }
