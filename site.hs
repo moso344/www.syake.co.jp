@@ -20,21 +20,30 @@ main = hakyll $ do
     -- ニュースリリースの各記事にマッチ
     match "release/*.md" $ do
         route cleanRoute
+        compile $ do
+            release <- reverse <$> loadAll ("release/*.md" .&&. hasVersion "list")
+            let ctx = listField "releaseSidebar" releaseSidebarCtx (return release) <>
+                      releaseCtx
+            pandocCompilerCustom
+                >>= saveSnapshot "content"
+                >>= loadAndApplyTemplate "templates/release.html" ctx
+                >>= loadAndApplyTemplate "templates/default.html" ctx
+                >>= loadAndApplyTemplate "templates/wrapper.html" ctx
+                >>= cleanUrls
+                >>= indentHtml
+
+    match "release/*.md" $ version "list" $ do
+        route cleanRoute
         compile $ pandocCompilerCustom
-            >>= saveSnapshot "content"
-            >>= loadAndApplyTemplate "templates/release.html" releaseCtx
-            >>= loadAndApplyTemplate "templates/default.html" releaseCtx
-            >>= loadAndApplyTemplate "templates/wrapper.html" releaseCtx
             >>= cleanUrls
-            >>= indentHtml
 
     -- ニュースリリース一覧にマッチ
     match "release.md" $ do
         route cleanRoute
         compile $ do
-            release <- reverse <$> loadAll "release/*.md"
-            let indexCtx = listField "release" releaseCtx (return release) `mappend`
-                           constField "title" "ニュースリリース" `mappend`
+            release <- reverse <$> loadAll ("release/*.md" .&&. hasNoVersion)
+            let indexCtx = listField "release" releaseCtx (return release) <>
+                           constField "title" "ニュースリリース" <>
                            syakeDefaultCtx
             getResourceBody
                 >>= applyAsTemplate indexCtx
@@ -73,7 +82,7 @@ main = hakyll $ do
     match "index.html" $ do
         route idRoute
         compile $ do
-            release <- reverse <$> loadAll "release/*.md"
+            release <- reverse <$> loadAll ("release/*.md" .&&. hasNoVersion)
             let indexCtx = listField "release" releaseCtx (return release) <>
                            constField "title" "Syake株式会社" <>
                            constField "ogType" "website" <>
@@ -99,7 +108,7 @@ main = hakyll $ do
     create ["feed.atom"] $ do
         route idRoute
         compile $ do
-            news <- take 10 . reverse <$> loadAllSnapshots "release/*.md" "content"
+            news <- take 10 . reverse <$> loadAllSnapshots ("release/*.md" .&&. hasNoVersion) "content"
             renderAtom releaseFeedConfiguration (releaseCtx <> bodyField "description") news >>=
                 indentXml
 
@@ -109,6 +118,10 @@ main = hakyll $ do
 releaseCtx :: Context String
 releaseCtx = teaserField "teaser" "content" <>
              syakeDefaultCtx
+
+-- | ニュースリリースのサイドバーのContext
+releaseSidebarCtx :: Context String
+releaseSidebarCtx = defaultContext
 
 -- | Syake系ページのContext
 syakeDefaultCtx :: Context String

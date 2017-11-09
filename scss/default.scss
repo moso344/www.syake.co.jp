@@ -26,9 +26,22 @@ $body-color: $light-yellow !default;
 $link-hover-color: $pink !default;
 $link-color: $cyan !default;
 
-$card-cap-bg: $cyan !default;
+$card-cap-bg: #020b30 !default;
 $card-bg: $darkest-navy !default;
 $card-border-color: $blue !default;
+
+$list-group-bg: $darkest-navy !default;
+$list-group-border-color: $blue !default;
+$list-group-hover-bg: #081332 !default;
+
+$list-group-action-color:        rgba(255, 255, 255, 0.75) !default;
+$list-group-action-hover-color:  rgba(255, 255, 255, 0.6) !default;
+
+$list-group-active-bg:           $navy !default;
+$list-group-active-border-color: $list-group-active-bg !default;
+
+$list-group-action-active-color: rgba(255, 255, 255, 0.5) !default;
+$list-group-action-active-bg:    $darkest-navy !default;
 
 $text-muted: $dark-orang !default;
 
@@ -40,7 +53,7 @@ $line-height-base: 1.55 !default;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 
-a:visited {
+a:visited:not(.list-group-item) {
     color: $violet;
 }
 
@@ -119,4 +132,11 @@ footer {
 
 .card p {
     @extend .card-text;
+}
+
+.small-release-title {
+    @extend .small;
+    display: inline-block;
+    line-height: 1.2rem;
+    color: rgba(255, 255, 255, 0.5);
 }
