@@ -4,15 +4,14 @@
     <div class="media-body card">
       <div class="card-body">
         <h5 class="card-title"><a href="$url$">$title$</a></h5>
-        <h6 class="card-subtitle text-muted mb-2"><time class="text-right">$date$</time></h6>
+        <h6 class="card-subtitle text-muted"><time class="text-right">$date$</time></h6>
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-3 mt-2">
             <a href="$url$">
-              <span class="d-md-none"><img class="rounded mw-100 mx-0 mb-2" src="$image$" alt="thumbnail" /></span>
-              <span class="d-none d-md-block"><img class="rounded mw-100 mx-0" src="$image$" alt="thumbnail" /></span>
+              <img class="rounded mw-100 mx-0" src="$image$" alt="thumbnail" />
             </a>
           </div>
-          <div class="col-md-9">
+          <div class="col-md-9 mt-2">
             $if(teaser)$
             $teaser$
             $else$
