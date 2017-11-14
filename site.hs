@@ -109,8 +109,9 @@ main = hakyll $ do
         route idRoute
         compile $ do
             news <- take 10 . reverse <$> loadAllSnapshots ("release/*.md" .&&. hasNoVersion) "content"
-            renderAtom releaseFeedConfiguration (releaseCtx <> bodyField "description") news >>=
-                indentXml
+            renderAtom releaseFeedConfiguration (releaseCtx <> bodyField "description") news
+                >>= cleanUrls
+                >>= indentXml
 
 --------------------------------------------------------------------------------
 
