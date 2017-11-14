@@ -2,10 +2,10 @@ $violet:      #b781f8 !default;
 $cyan:        #58d3f7 !default;
 $blue:        #3c569f !default;
 $navy:        #000080 !default;
-$light-yellow:#f0f2eb !default;
+$silver:      #efefef !default;
 $yellow:      #b58900 !default;
 $dark-navy:   #0a0a57 !default;
-$darker-navy: #0d1b40 !default;
+$darker-navy: #081538 !default;
 $darkest-navy:#081129 !default;
 $pink:        #cd4259 !default;
 $green:       #146f23 !default;
@@ -13,6 +13,10 @@ $dark-orang:  #b45f04 !default;
 $white:       #ffffff !default;
 
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, Meiryo, sans-serif !default;
+$font-size-base: 1.1rem;
+$font-weight-normal: lighter !default;
+
+$paragraph-margin-bottom: 1.5rem !default;
 
 $header-color:        $darkest-navy !default;
 $header-border-color: $blue         !default;
@@ -21,7 +25,7 @@ $footer-color:        $dark-navy    !default;
 $footer-border-color: $blue         !default;
 
 $body-bg: $footer-color !default;
-$body-color: $light-yellow !default;
+$body-color: $silver !default;
 
 $link-hover-color: $pink !default;
 $link-color: $cyan !default;
@@ -49,7 +53,7 @@ $thumbnail-padding: 0.4rem;
 $thumbnail-bg: rgba($white, 0.98);
 $thumbnail-border-color: $blue;
 
-$line-height-base: 1.55 !default;
+$line-height-base: 1.6 !default;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 
@@ -77,25 +81,29 @@ h1 {
     @extend .mb-3;
     @extend .pl-3;
     border-left: double 16px $pink;
+    font-size: 1.8rem;
 }
 
 h2 {
     @extend .mb-3;
-    @extend .pt-1;
-    @extend .pb-1;
+    @extend .py-1;
     border-bottom: solid 1px $yellow;
+    font-size: 1.6rem;
 }
 
 h3 {
+    @extend .mt-1;
     @extend .mb-2;
     @extend .pl-2;
     border-left: solid 10px $green;
+    font-size: 1.4rem;
 }
 
 h4 {
     @extend .mb-2;
     @extend .pl-2;
     border-left: solid 5px $cyan;
+    font-size: 1.4rem;
 }
 
 header {
