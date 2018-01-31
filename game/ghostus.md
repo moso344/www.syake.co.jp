@@ -19,10 +19,10 @@ title: GHOSTUS
 |基本操作系    |8方向移動 + 2ボタン(ショット、レコード)|
 |動作環境      |PC(Windows・MacOS・Linux)|
 |対象年齢      |全年齢|
-|完成版発売予定|2017年冬頃|
+|発売日        |2018/01/31|
 |販売価格      |任価(任意の時期・金額・回数)による|
 |ゲーム性      |シンプルでいてマリアナ海溝のように深い|
-| β版         | <b>[β版をダウンロードする](https://www.syakerake.jp/1)</b>
+|ダウンロード  |<b>[SYAKERAKE](https://www.syakerake.jp/1)</b>
 </div>
 <div class="col-md-6">
 <iframe class="w-100" width="560" height="315" src="https://www.youtube.com/embed/QiwK5Z60VYk" frameborder="0" allowfullscreen></iframe>

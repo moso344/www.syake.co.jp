@@ -1,10 +1,10 @@
 ---
-title: GHOSTUS-β Download
+title: GHOSTUS Download
 ---
 
-ご利用の環境に適したファイルをDownloadして下さい。
+~~ご利用の環境に適したファイルをDownloadして下さい。~~
 
-**[SYAKERAKEで公開していいます](https://www.syakerake.jp/1)**
+**[SYAKERAKEで公開しています](https://www.syakerake.jp/1)**
 
 ## インストラクション
 
