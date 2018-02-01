@@ -128,6 +128,7 @@ releaseSidebarCtx = defaultContext
 syakeDefaultCtx :: Context String
 syakeDefaultCtx = descriptionField "description" syakeDefualtDescription <>
                   imageField "image" syakeDefaultImage <>
+                  videoField "video" <>
                   constField "css" "/css/default.css" <>
                   defaultContext
 
@@ -159,6 +160,22 @@ imageField :: String -> String -> Context String
 imageField key defaultImage = field key $ \item -> do
     metadata <- getMetadata (itemIdentifier item)
     return $ fromMaybe defaultImage $ lookupString key metadata
+
+-- | og:videoを指定するときに使用する
+videoField :: String -> Context String
+videoField key = field key $ \item -> do
+    metadata <- getMetadata (itemIdentifier item)
+    return $ fromMaybe "<meta name=\"twitter:card\" content=\"summary\">" $ do
+        video <- lookupString key metadata
+        return $  "<meta property=\"og:video:url\" content=\"http://" <> video <> "\">"
+               <> "<meta property=\"og:video:secure_url\" content=\"https://" <> video <> "\">"
+               <> "<meta property=\"og:video:type\" content=\"application/x-shockwave-flash\">"
+               <> "<meta property=\"og:video:width\" content=\"1920\">"
+               <> "<meta property=\"og:video:height\" content=\"1080\">"
+               <> "<meta name=\"twitter:card\" content=\"player\">"
+               <> "<meta name=\"twitter:player\" content=\"https://" <> video <> "\">"
+               <> "<meta name=\"twitter:player:width\" content=\"1920\">"
+               <> "<meta name=\"twitter:player:height\" content=\"1080\">"
 
 -- | Syake系記事のデフォルトのog:image
 syakeDefaultImage :: String
