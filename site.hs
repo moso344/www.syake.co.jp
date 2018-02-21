@@ -1,9 +1,14 @@
 --------------------------------------------------------------------------------
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
+
+import           Data.Aeson
+import           Data.Aeson.Types
 import           Data.List       (isSuffixOf)
 import           Data.Maybe
 import           Data.Monoid
 import qualified Data.Set        as S
+import           GHC.Generics    (Generic)
 import           Hakyll
 import           System.FilePath
 import           Text.Pandoc
@@ -118,6 +123,7 @@ main = hakyll $ do
 -- | ニュースリリースのContext
 releaseCtx :: Context String
 releaseCtx = teaserField "teaser" "content" <>
+             structuredDataField <>
              syakeDefaultCtx
 
 -- | ニュースリリースのサイドバーのContext
@@ -176,6 +182,40 @@ videoField key = field key $ \item -> do
                <> "<meta name=\"twitter:player\" content=\"https://" <> video <> "\">"
                <> "<meta name=\"twitter:player:width\" content=\"1920\">"
                <> "<meta name=\"twitter:player:height\" content=\"1080\">"
+
+data Schema = Product { productName        :: String
+                      , productImage       :: Maybe String
+                      , productDescription :: Maybe String
+                      , productBrand       :: Maybe String
+                      }
+            | Test
+            deriving (Generic, Show, Read)
+
+instance ToJSON Schema where
+    toEncoding = genericToEncoding defaultOptions
+        { fieldLabelModifier     = id
+        , constructorTagModifier = id
+        , allNullaryToStringTag  = True
+        , omitNothingFields      = True
+        , sumEncoding            = defaultTaggedObject {tagFieldName = "@type"}
+        , unwrapUnaryRecords     = False
+        }
+
+instance FromJSON Schema
+
+structuredDataField :: Context String
+structuredDataField = field "structreData" $ \item -> do
+    metadata <- getMetadata (itemIdentifier item)
+    return $ fromMaybe "" $ do
+        date <- lookupString "date" metadata
+        video <- lookupString "video" metadata
+        title <- lookupString "title" metadata
+        image <- lookupString "image" metadata
+        description <- lookupString "description" metadata
+        return $ "<script type=\"application/ld+json\">" <> title <>  "</script>"
+  --where
+  --  jsonLd = (<>) "{\"@context\":\"https://schema.org\"," $ tail . toStringStrict . encode $ schema
+
 
 -- | Syake系記事のデフォルトのog:image
 syakeDefaultImage :: String

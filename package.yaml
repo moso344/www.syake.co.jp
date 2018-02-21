@@ -13,6 +13,7 @@ dependencies:
 - filepath
 - hakyll
 - pandoc
+- aeson
 - time
 
 executables:
