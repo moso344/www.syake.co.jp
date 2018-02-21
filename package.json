@@ -2,8 +2,8 @@
   "name": "www.syake.co.jp",
   "license": "UNLICENSED",
   "dependencies": {
-    "bootstrap": "^4.0.0-beta.2 ",
-    "node-sass": "^4.5.3"
+    "bootstrap": "^4.0.0",
+    "node-sass": "^4.7.2"
   },
   "scripts": {
     "node-sass": "node-sass"
