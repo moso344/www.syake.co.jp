@@ -55,6 +55,8 @@ $thumbnail-border-color: $blue;
 
 $line-height-base: 1.6 !default;
 
+$hr-border-color: $blue;
+
 @import '../node_modules/bootstrap/scss/bootstrap';
 
 a:visited:not(.list-group-item) {
