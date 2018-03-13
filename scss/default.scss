@@ -183,3 +183,7 @@ a > .small-release-title {
 a:hover > .small-release-title {
     color: rgba(255, 255, 255, 0.6);
 }
+
+.social > * {
+    @extend .align-bottom;
+}
