@@ -4,10 +4,12 @@
   </div>
   <ul class="list-group list-group-flush">
     $for(releaseSidebar)$
-    <a href="$url$" class="list-group-item list-group-item-action px-3">
-      <span class="h4">$date$</span><br>
-      <span class="small-release-title">$title$</span>
-    </a>
+    <li>
+      <a href="$url$" class="list-group-item list-group-item-action px-3">
+        <span class="h4">$date$</span><br>
+        <span class="small-release-title">$title$</span>
+      </a>
+    </li>
     $endfor$
   </ul>
 </div>
