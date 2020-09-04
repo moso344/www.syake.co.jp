@@ -3,7 +3,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "bootstrap": "^4.0.0",
-    "node-sass": "^4.7.2"
+    "node-sass": "^4.13.1"
   },
   "scripts": {
     "node-sass": "node-sass"
